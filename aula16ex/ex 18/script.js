@@ -1,51 +1,64 @@
-var lista = []
+let num = document.getElementById("fnum")
+let lista = document.getElementById("flista")
+let res = document.getElementById("res")
+let valores = []
 
-function clicar(){
-    let num = document.getElementById("txtn")
-    n = Number(num.value)
-    let novo = lista.indexOf(n)
-
-    if (num.value.length == 0){
-        window.alert("Valor inválido ou já recontrado na lista")
+function isNumero(n){
+    if (Number(n) >= 1 && Number(n) <= 100){
+        return true
     } else {
-        if ( n > 0 && n <= 100 ){
-            if (novo == -1){
-                adicionar(n) 
-            } else {
-                window.alert("Valor inválido ou já recontrado na lista")
-            }
-        } else {
-            window.alert("Valor inválido ou já recontrado na lista")
-        }
+        return false
     }
-
 }
 
-function adicionar(n){
-    let tab = document.getElementById("txttab")
-    
-    lista.push(n)
-    let op = document.createElement("option")
-    op.setAttribute("value", `num${n}`)
-    op.text = `Valor ${Number(n)} adicionado`
-    tab.appendChild(op)  
+function inLista(n, l){
+    if ( l.indexOf(Number(n)) != -1){
+        return true
+    } else {
+        return false
+    }
+}
+
+
+function clicar(){
+    if (isNumero(num.value) && !inLista(num.value, valores)){
+        valores.push(Number(num.value))
+        let item = document.createElement("option")
+        item.text = `Valor ${num.value} adicionado.`
+        lista.appendChild(item)
+        res.innerHTML = " "
+    } else {
+        window.alert("Valor invalido ou já encontrado na lista.")
+    }
+    num.value = ""
+    num.focus()
 }
 
 function finalizar(){
-    if ( lista.length == 0 ){
-        window.alert(`Coloque valores antes de finalizar`)
+    if (valores.length == 0) {
+        window.alert(`Adicione valores antes de finalizar!`)
     } else {
-        let res = document.getElementById("res")
-        let soma = 0 
-        for (let pas = 0; pas < lista.length; pas++){
-            soma+=lista[pas]
+        let tot = valores.length
+        let maior = valores[0]
+        let menor = valores[0]
+        let soma = 0
+        let media = 0
+        for (let pos in valores){
+            soma += valores[pos]
+
+            if (valores[pos] > maior){
+                maior = valores[pos]
+            }
+            if (valores[pos] < menor){
+                menor = valores[pos]
+            }
         }
-        let med = soma / lista.length
-        lista.sort()
-        res.innerHTML = `<p>Ao tudo, temos ${lista.length} números cadastrados</p>`
-        res.innerHTML += `<p>O maior valor informado foi ${lista[0]}</p>`
-        res.innerHTML += `<p>O menor valor informado foi ${lista[lista.length - 1]}</p>`
-        res.innerHTML += `<p>Somando todos os valores, temos ${soma}</p>`
-        res.innerHTML += `<p>A média dos valores digitados é ${med}</p>` 
+        media = soma / tot
+        res.innerHTML = " "
+        res.innerHTML += `<p>Ao todo, temos ${tot} números cadastrados</p>`
+        res.innerHTML += `<p>O maior valor informado foi ${maior}</p>`
+        res.innerHTML += `<p>O menor valor informado foi ${menor}</p>`
+        res.innerHTML += `<p>Somando todos os valros temos ${soma}</p>`
+        res.innerHTML += `<p>A média dos valores é ${media}</p>`
     }
 }
