@@ -32,9 +32,20 @@ function adicionar(n){
 }
 
 function finalizar(){
-    let res = document.getElementById("res")
-    lista.sort()
-    res.innerHTML = `<p>Ao tudo, temos ${lista.length} números cadastrados</p>`
-    res.innerHTML += `<p>O maior valor informado foi ${lista[lista.length - 1]}</p>`
-    res.innerHTML += `<p>O menor valor informado foi ${lista[0]}</p>`
+    if ( lista.length == 0 ){
+        window.alert(`Coloque valores antes de finalizar`)
+    } else {
+        let res = document.getElementById("res")
+        let soma = 0 
+        for (let pas = 0; pas < lista.length; pas++){
+            soma+=lista[pas]
+        }
+        let med = soma / lista.length
+        lista.sort()
+        res.innerHTML = `<p>Ao tudo, temos ${lista.length} números cadastrados</p>`
+        res.innerHTML += `<p>O maior valor informado foi ${lista[0]}</p>`
+        res.innerHTML += `<p>O menor valor informado foi ${lista[lista.length - 1]}</p>`
+        res.innerHTML += `<p>Somando todos os valores, temos ${soma}</p>`
+        res.innerHTML += `<p>A média dos valores digitados é ${med}</p>` 
+    }
 }
